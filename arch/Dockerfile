@@ -11,6 +11,7 @@ RUN pacman --noconfirm -Sy \
   sudo \
   binutils \
   fakeroot \
+  base-devel \
   python2 \
   alsa-lib \
   desktop-file-utils \
