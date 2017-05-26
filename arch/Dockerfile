@@ -1,4 +1,4 @@
-# VERSION:        0.1
+# VERSION:        0.3
 # Base docker image
 FROM antergos/archlinux-base-devel
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
@@ -29,7 +29,11 @@ RUN pacman --noconfirm -Sy \
   glibc \
   libxss \
   curl \
-  xorg-server-xvfb
+  openssl \
+  c-ares \
+  http-parser \
+  xorg-server-xvfb \
+  nodejs
 
 # Setting passwordless sudo
 RUN echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
