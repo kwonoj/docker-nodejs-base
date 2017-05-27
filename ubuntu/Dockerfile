@@ -1,10 +1,11 @@
-# VERSION:        0.1
+# VERSION:        0.3
 # Base docker image
 FROM ubuntu:trusty
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
 
 # Install base dependencies
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+    sudo \
     build-essential \
     ca-certificates \
     curl \
@@ -64,22 +65,19 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
   && npm install -g npm@4.0.5
 
-# avoid node-git installation issues
+# bump up gcc to 4.9
 RUN apt-get install -y software-properties-common --no-install-recommends
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 RUN apt-get update
-RUN apt-get install -y libstdc++-4.9-dev --no-install-recommends
-
-# bump up gcc to 4.9
 RUN apt-get install -y g++-4.9
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
 
-RUN npm install -g surf-build@latest
+# Setting passwordless sudo
+RUN echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-# avoid npm postinstall runs under root
-RUN useradd -ms /bin/bash surf
-
-ENV HOME=/home/surf
-USER surf
+# add user `builder` for jobs doesn't run under root
+RUN useradd -mr builder
+ENV HOME=/home/builder
+ENV TMPDIR=/home/builder/temp
 
 CMD node --version && npm --version
