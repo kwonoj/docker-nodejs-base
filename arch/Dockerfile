@@ -1,4 +1,4 @@
-# VERSION:        0.3
+# VERSION:        0.4
 # Base docker image
 FROM antergos/archlinux-base-devel
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
@@ -70,5 +70,8 @@ RUN source /usr/share/nvm/init-nvm.sh \
 # add node and npm to path so the commands are available
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+# reset user to root after makepkg completes
+USER root
 
 CMD node --version && npm --version
