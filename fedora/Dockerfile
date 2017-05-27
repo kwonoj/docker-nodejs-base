@@ -1,10 +1,11 @@
-# VERSION:        0.1
+# VERSION:        0.2
 # Base docker image
 FROM fedora:21
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
 
 # Install base dependencies
 RUN rpm --rebuilddb; yum install -y \
+    sudo \
     make \
     gcc \
     gcc-c++ \
@@ -66,12 +67,12 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
   && npm install -g npm@4.0.5
 
-RUN npm install -g surf-build@latest
+# Setting passwordless sudo
+RUN echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-# avoid npm postinstall runs under root
-RUN useradd -ms /bin/bash surf
-
-ENV HOME=/home/surf
-USER surf
+# add user `builder` for jobs doesn't run under root
+RUN useradd -mr builder
+ENV HOME=/home/builder
+ENV TMPDIR=/home/builder/temp
 
 CMD node --version && npm --version
