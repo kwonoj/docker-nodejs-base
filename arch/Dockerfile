@@ -1,4 +1,3 @@
-# VERSION:        0.5
 # Base docker image
 FROM antergos/archlinux-base-devel
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
@@ -66,7 +65,7 @@ RUN source /usr/share/nvm/init-nvm.sh \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
     && nvm use default \
-    && npm install -g npm@4.0.5
+    && npm install -g npm@4
 
 # add node and npm to path so the commands are available
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
