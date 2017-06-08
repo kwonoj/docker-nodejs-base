@@ -17,6 +17,7 @@ RUN rpm --rebuilddb; yum install -y \
     cmake \
     libgnome-keyring-devel \
     libnss3 \
+    libsecret-devel \
     gtk2-devel \
     libnotify-devel \
     dbus-devel \
