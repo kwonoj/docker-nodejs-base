@@ -22,6 +22,7 @@ RUN pacman --noconfirm -Sy \
   libnotify \
   libxtst \
   libxkbfile \
+  libsecret \
   nss \
   gvfs \
   gconf \
