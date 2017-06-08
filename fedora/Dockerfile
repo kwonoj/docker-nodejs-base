@@ -1,4 +1,4 @@
-# VERSION:        0.2
+# VERSION:        0.3
 # Base docker image
 FROM fedora:21
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>

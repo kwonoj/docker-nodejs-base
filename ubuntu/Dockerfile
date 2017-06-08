@@ -1,4 +1,4 @@
-# VERSION:        0.3
+# VERSION:        0.4
 # Base docker image
 FROM ubuntu:trusty
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>

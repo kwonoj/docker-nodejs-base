@@ -1,4 +1,4 @@
-# VERSION:        0.4
+# VERSION:        0.5
 # Base docker image
 FROM antergos/archlinux-base-devel
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
