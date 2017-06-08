@@ -1,0 +1,35 @@
+os: linux
+dist: trusty
+sudo: required
+services:
+  - docker
+
+matrix:
+  # let whole build fails if one of matrix build config fails
+  fast_finish: true
+
+  include:
+    - env:
+      - DOCKER_REPO='ojkwon/arch-nvm-node'
+      - DOCKERFILE=arch
+
+    - env:
+      - DOCKER_REPO='ojkwon/fedora-21-node'
+      - DOCKERFILE=fedora
+
+    - env:
+      - DOCKER_REPO='ojkwon/ubuntu-trusty-node'
+      - DOCKERFILE=ubuntu
+
+script:
+  # set docker tag based on build jobs.
+  - DOCKER_TAG=$DOCKER_REPO:${TRAVIS_TAG:-$TRAVIS_BUILD_NUMBER}
+  - cd $DOCKERFILE
+  - tput setaf 2; echo building docker image for $DOCKERFILE tagged as $DOCKER_TAG at $(pwd)
+  - sudo docker build --tag $DOCKER_TAG .
+  - |
+    if [[ ! -z "${TRAVIS_TAG}" ]]; then
+      tput setaf 2; echo this build is tagged versioned build, pushing into registry
+      sudo docker login -u=ojkwon -p="$DOCKER_PASSWORD"
+      sudo docker push $DOCKER_TAG
+    fi
