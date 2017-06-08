@@ -14,6 +14,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     clang \
     cmake \
     libgnome-keyring-dev \
+    libsecret-1-dev \
     libnss3 \
     libgtk2.0-dev \
     libnotify-dev \
