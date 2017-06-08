@@ -1,4 +1,3 @@
-# VERSION:        0.3
 # Base docker image
 FROM fedora:21
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
@@ -37,7 +36,7 @@ RUN rpm --rebuilddb; yum install -y \
 
 
 # installing node.js, from official node.js dockerfile setup (https://github.com/nodejs/docker-node/blob/5e80a80771f31b7f5d1327ea94830af57c1a17a2/7.9/Dockerfile#L6-L32)
-# except inline npm 4.0.5 install (https://github.com/npm/npm/issues/15558#issuecomment-283331163), we're using a version of NPM that can consistently shrinkwrap
+# except inline npm 4 install (https://github.com/npm/npm/issues/15558#issuecomment-283331163), we're using a version of NPM that can consistently shrinkwrap
 
 # gpg keys listed at https://github.com/nodejs/node#release-team
 RUN set -ex \
@@ -66,7 +65,7 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
   && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
-  && npm install -g npm@4.0.5
+  && npm install -g npm@4
 
 # Setting passwordless sudo
 RUN echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
