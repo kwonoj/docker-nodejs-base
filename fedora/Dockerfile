@@ -2,6 +2,10 @@
 FROM fedora:21
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
 
+# Set default node, npm version to install if not specified
+ARG NODE_VERSION=7.9.0
+ARG NPM_VERSION=4
+
 # Install base dependencies
 RUN rpm --rebuilddb; yum install -y \
     sudo \
@@ -55,8 +59,6 @@ RUN set -ex \
     gpg --keyserver keyserver.pgp.com --recv-keys "$key" ; \
   done
 
-ENV NODE_VERSION 7.9.0
-
 # install node, then update npm to 4.0.5
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
@@ -65,7 +67,7 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
   && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
-  && npm install -g npm@4
+  && npm install -g npm@$NPM_VERSION
 
 # Setting passwordless sudo
 RUN echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -75,4 +77,5 @@ RUN useradd -mr builder
 ENV HOME=/home/builder
 ENV TMPDIR=/home/builder/temp
 
-CMD node --version && npm --version
+RUN node --version && npm --version
+CMD echo 'done'

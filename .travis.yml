@@ -4,6 +4,11 @@ sudo: required
 services:
   - docker
 
+env:
+  global:
+  - NODE_VERSION=8.4.0
+  - NPM_VERSION=5.4.0
+
 matrix:
   # let whole build fails if one of matrix build config fails
   fast_finish: true
@@ -25,8 +30,8 @@ script:
   # set docker tag based on build jobs.
   - DOCKER_TAG=$DOCKER_REPO:${TRAVIS_TAG:-$TRAVIS_BUILD_NUMBER}
   - cd $DOCKERFILE
-  - tput setaf 2; echo building docker image for $DOCKERFILE tagged as $DOCKER_TAG at $(pwd)
-  - sudo docker build --tag $DOCKER_TAG .
+  - tput setaf 2; echo building docker image for $DOCKERFILE tagged as $DOCKER_TAG at $(pwd), with node $NODE_VERSION / npm $NPM_VERSION
+  - sudo docker build --build-arg NODE_VERSION=$NODE_VERSION --build-arg NPM_VERSION=$NPM_VERSION  --tag $DOCKER_TAG .
   - |
     if [[ ! -z "${TRAVIS_TAG}" ]]; then
       tput setaf 2; echo this build is tagged versioned build, pushing into registry
