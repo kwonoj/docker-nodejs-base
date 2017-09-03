@@ -2,6 +2,10 @@
 FROM antergos/archlinux-base-devel
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
 
+# Set default node, npm version to install if not specified
+ARG NODE_VERSION=7.9.0
+ARG NPM_VERSION=4
+
 # Update installed packages
 RUN pacman --noconfirm -Syy && pacman --noconfirm -Su
 
@@ -56,8 +60,7 @@ RUN mkdir $TMPDIR \
 # Set makepkg ext configuration to archive into .xz
 ENV PKGEXT='.pkg.tar.xz'
 
-# Set node version to install
-ENV NODE_VERSION=7.9.0
+
 ENV NVM_DIR=$HOME/.nvm
 
 # Install node and npm
@@ -65,7 +68,7 @@ RUN source /usr/share/nvm/init-nvm.sh \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
     && nvm use default \
-    && npm install -g npm@4
+    && npm install -g npm@$NPM_VERSION
 
 # add node and npm to path so the commands are available
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
@@ -74,4 +77,5 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 # reset user to root after makepkg completes
 USER root
 
-CMD node --version && npm --version
+RUN node --version && npm --version
+CMD echo 'done'
