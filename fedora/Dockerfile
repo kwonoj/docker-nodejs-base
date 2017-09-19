@@ -13,7 +13,6 @@ RUN rpm --rebuilddb; yum install -y \
     gcc \
     gcc-c++ \
     glibc-devel \
-    git-core \
     rpmdevtools \
     wget \
     clang \
@@ -36,8 +35,26 @@ RUN rpm --rebuilddb; yum install -y \
     libXScrnSaver-devel \
     xorg-x11-server-Xvfb \
     libXtst-devel \
-    gnupg
+    gnupg \
+    curl-devel \
+    expat-devel \
+    gettext-devel \
+    openssl-devel \
+    zlib-devel \
+    perl-ExtUtils-MakeMaker
 
+# Bump up git to latest
+
+RUN cd /usr/src && \
+  wget https://www.kernel.org/pub/software/scm/git/git-2.14.1.tar.gz && \
+  tar xzf git-2.14.1.tar.gz && \
+  cd git-2.14.1 && \
+  make prefix=/usr/local/git all && \
+  make prefix=/usr/local/git install
+
+ENV PATH /usr/local/git/bin:$PATH
+
+RUN git --version
 
 # installing node.js, from official node.js dockerfile setup (https://github.com/nodejs/docker-node/blob/5e80a80771f31b7f5d1327ea94830af57c1a17a2/7.9/Dockerfile#L6-L32)
 # except inline npm 4 install (https://github.com/npm/npm/issues/15558#issuecomment-283331163), we're using a version of NPM that can consistently shrinkwrap

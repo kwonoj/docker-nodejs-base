@@ -39,6 +39,8 @@ RUN pacman --noconfirm -Sy \
   xorg-server-xvfb \
   nodejs
 
+RUN git --version
+
 # Setting passwordless sudo
 RUN echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
@@ -59,7 +61,6 @@ RUN mkdir $TMPDIR \
 
 # Set makepkg ext configuration to archive into .xz
 ENV PKGEXT='.pkg.tar.xz'
-
 
 ENV NVM_DIR=$HOME/.nvm
 

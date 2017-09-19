@@ -6,6 +6,11 @@ MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
 ARG NODE_VERSION=7.9.0
 ARG NPM_VERSION=4
 
+# Bump up git to latest
+RUN apt-get update && \
+  apt-get install -y software-properties-common && \
+  add-apt-repository ppa:git-core/ppa
+
 # Install base dependencies
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     sudo \
@@ -36,6 +41,8 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     wget \
     xvfb \
     --no-install-recommends
+
+RUN git --version
 
 # installing node.js, from official node.js dockerfile setup (https://github.com/nodejs/docker-node/blob/5e80a80771f31b7f5d1327ea94830af57c1a17a2/7.9/Dockerfile#L6-L32)
 # except inline npm 4 install (https://github.com/npm/npm/issues/15558#issuecomment-283331163), we're using a version of NPM that can consistently shrinkwrap
