@@ -1,5 +1,5 @@
 # Base docker image
-FROM ubuntu:trusty
+FROM ubuntu:xenial
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
 
 # Set default node, npm version to install if not specified
@@ -34,7 +34,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     libasound2-dev \
     libcap-dev \
     libcups2-dev \
-    libXtst-dev \
+    libxtst-dev \
     libcurl4-openssl-dev \
     libxkbfile-dev \
     curl \

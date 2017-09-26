@@ -23,7 +23,7 @@ matrix:
       - DOCKERFILE=fedora
 
     - env:
-      - DOCKER_REPO='ojkwon/ubuntu-trusty-node'
+      - DOCKER_REPO='ojkwon/ubuntu-xenial-node'
       - DOCKERFILE=ubuntu
 
 script:
