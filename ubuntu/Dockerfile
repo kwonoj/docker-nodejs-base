@@ -91,8 +91,5 @@ RUN useradd -mr builder
 ENV HOME=/home/builder
 ENV TMPDIR=/home/builder/temp
 
-# install core snap
-RUN /usr/lib/snapd/snapd &; snap install core
-
 RUN node --version && npm --version
 CMD echo 'done'
