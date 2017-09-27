@@ -92,6 +92,7 @@ ENV HOME=/home/builder
 ENV TMPDIR=/home/builder/temp
 
 # install core snap
+RUN /usr/lib/snapd/snapd &
 RUN snap install core
 
 RUN node --version && npm --version
