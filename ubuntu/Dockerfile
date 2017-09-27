@@ -40,6 +40,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     curl \
     wget \
     xvfb \
+    snapd \
     snapcraft \
     --no-install-recommends
 
@@ -89,6 +90,9 @@ RUN echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 RUN useradd -mr builder
 ENV HOME=/home/builder
 ENV TMPDIR=/home/builder/temp
+
+# install core snap
+RUN snap install core
 
 RUN node --version && npm --version
 CMD echo 'done'
