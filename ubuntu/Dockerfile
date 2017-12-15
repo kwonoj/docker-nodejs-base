@@ -42,6 +42,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     xvfb \
     snapd \
     snapcraft \
+    squashfs-tools \
     --no-install-recommends
 
 RUN git --version
