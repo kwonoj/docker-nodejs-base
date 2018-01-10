@@ -9,7 +9,8 @@ ARG NPM_VERSION=4
 # Bump up git to latest
 RUN apt-get update && \
   apt-get install -y software-properties-common && \
-  add-apt-repository ppa:git-core/ppa
+  add-apt-repository ppa:git-core/ppa && \
+  add-apt-repository ppa:snappy-dev/snapcraft-daily -y
 
 # Install base dependencies
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
