@@ -30,14 +30,12 @@ RUN pacman --noconfirm -Sy \
   gvfs \
   gconf \
   libgnome-keyring \
-  glibc \
   libxss \
   curl \
   openssl \
   c-ares \
   http-parser \
-  xorg-server-xvfb \
-  nodejs
+  xorg-server-xvfb
 
 RUN git --version
 
