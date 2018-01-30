@@ -3,8 +3,8 @@ FROM ubuntu:xenial
 MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
 
 # Set default node, npm version to install if not specified
-ARG NODE_VERSION=7.9.0
-ARG NPM_VERSION=4
+ARG NODE_VERSION=8.9.1
+ARG NPM_VERSION=5.6.0
 
 # Bump up git to latest
 RUN apt-get update && \
