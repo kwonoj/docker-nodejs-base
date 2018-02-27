@@ -1,6 +1,5 @@
 # Base docker image
 FROM fedora:21
-MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
 
 # Set default node, npm version to install if not specified
 ARG NODE_VERSION=8.9.1

@@ -1,6 +1,5 @@
 # Base docker image
 FROM antergos/archlinux-base-devel
-MAINTAINER OJ Kwon <kwon.ohjoong@gmail.com>
 
 # Set default node, npm version to install if not specified
 ARG NODE_VERSION=8.9.1
@@ -62,7 +61,13 @@ ENV PKGEXT='.pkg.tar.xz'
 
 ENV NVM_DIR=$HOME/.nvm
 
-# Install node and npm
+# Install arch pkg nodejs first
+RUN mkdir -p /home/builder/node-tmp && cd /home/builder/node-tmp && \
+  curl https://archive.archlinux.org/packages/n/nodejs/nodejs-$NODE_VERSION-1-x86_64.pkg.tar.xz > ./nodejs-$NODE_VERSION-1-x86_64.pkg.tar.xz && \
+  curl https://archive.archlinux.org/packages/n/nodejs/nodejs-$NODE_VERSION-1-x86_64.pkg.tar.xz.sig > ./nodejs-$NODE_VERSION-1-x86_64.pkg.tar.xz.sig && \
+  sudo pacman --noconfirm -U nodejs-$NODE_VERSION-1-x86_64.pkg.tar.xz
+
+# Install node via nvm, bump up npm
 RUN source /usr/share/nvm/init-nvm.sh \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
