@@ -24,7 +24,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     libsecret-1-dev \
     libnss3 \
     libgtk2.0-dev \
-    libgtk3.0-dev \
+    libgtk-3-dev \
     libnotify-dev \
     libdbus-1-dev \
     libxrandr-dev \
