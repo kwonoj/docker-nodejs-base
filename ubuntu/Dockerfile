@@ -8,8 +8,7 @@ ARG NPM_VERSION=5.6.0
 # Bump up git to latest
 RUN apt-get update && \
   apt-get install -y software-properties-common && \
-  add-apt-repository ppa:git-core/ppa && \
-  add-apt-repository ppa:snappy-dev/snapcraft-daily -y
+  add-apt-repository ppa:git-core/ppa
 
 # Install base dependencies
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
@@ -25,6 +24,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     libsecret-1-dev \
     libnss3 \
     libgtk2.0-dev \
+    libgtk-3-dev \
     libnotify-dev \
     libdbus-1-dev \
     libxrandr-dev \
