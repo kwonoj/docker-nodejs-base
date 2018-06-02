@@ -34,7 +34,8 @@ RUN pacman --noconfirm -Sy \
   openssl \
   c-ares \
   http-parser \
-  xorg-server-xvfb
+  xorg-server-xvfb \
+  pacman-contrib
 
 RUN git --version
 
