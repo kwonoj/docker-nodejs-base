@@ -41,7 +41,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     wget \
     xvfb \
     snapd \
-    snapcraft \
+    snapcraft=2.43.1 \
     squashfs-tools \
     --no-install-recommends
 
