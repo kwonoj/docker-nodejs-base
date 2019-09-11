@@ -37,6 +37,8 @@ RUN pacman --noconfirm -Sy \
   xorg-server-xvfb \
   pacman-contrib
 
+RUN pacman-key --refresh-keys
+
 RUN git --version
 
 # Setting passwordless sudo

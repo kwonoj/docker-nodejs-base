@@ -6,7 +6,7 @@ services:
 
 env:
   global:
-  - NODE_VERSION=12.7.0
+  - NODE_VERSION=12.9.1
   - NPM_VERSION=6.10.2
 
 matrix:
