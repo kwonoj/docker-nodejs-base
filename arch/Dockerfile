@@ -1,16 +1,18 @@
 # Base docker image
-FROM antergos/archlinux-base-devel
+FROM archlinux/base
 
 # Set default node, npm version to install if not specified
 ARG NODE_VERSION=8.9.1
 ARG NPM_VERSION=5.6.0
 
-# Update installed packages
-RUN pacman --noconfirm -Syy && pacman --noconfirm -Su
+RUN pacman-key --refresh-keys --keyserver hkp://ipv4.pool.sks-keyservers.net:11371
+RUN rm -fr /etc/pacman.d/gnupg && pacman-key --init && pacman-key --populate archlinux
 
 # Install dependencies
 RUN pacman --noconfirm -Sy \
   sudo \
+  git \
+  gnupg \
   binutils \
   fakeroot \
   base-devel \
@@ -36,6 +38,9 @@ RUN pacman --noconfirm -Sy \
   http-parser \
   xorg-server-xvfb \
   pacman-contrib
+
+# Update installed packages
+RUN pacman --noconfirm -Syy && pacman --noconfirm -Syyu
 
 RUN git --version
 
@@ -64,9 +69,7 @@ ENV NVM_DIR=$HOME/.nvm
 
 # Install arch pkg nodejs first
 RUN mkdir -p /home/builder/node-tmp && cd /home/builder/node-tmp && \
-  curl https://archive.archlinux.org/packages/n/nodejs/nodejs-$NODE_VERSION-1-x86_64.pkg.tar.xz > ./nodejs-$NODE_VERSION-1-x86_64.pkg.tar.xz && \
-  curl https://archive.archlinux.org/packages/n/nodejs/nodejs-$NODE_VERSION-1-x86_64.pkg.tar.xz.sig > ./nodejs-$NODE_VERSION-1-x86_64.pkg.tar.xz.sig && \
-  sudo pacman --noconfirm -U nodejs-$NODE_VERSION-1-x86_64.pkg.tar.xz
+  sudo pacman --noconfirm -U https://archive.archlinux.org/packages/n/nodejs/nodejs-$NODE_VERSION-1-x86_64.pkg.tar.xz
 
 # Install node via nvm, bump up npm
 RUN source /usr/share/nvm/init-nvm.sh \
