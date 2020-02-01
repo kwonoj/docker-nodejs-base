@@ -29,7 +29,6 @@ RUN pacman --noconfirm -Sy \
   libsecret \
   nss \
   gvfs \
-  gconf \
   libgnome-keyring \
   libxss \
   curl \
@@ -69,7 +68,7 @@ ENV NVM_DIR=$HOME/.nvm
 
 # Install arch pkg nodejs first
 RUN mkdir -p /home/builder/node-tmp && cd /home/builder/node-tmp && \
-  sudo pacman --noconfirm -U https://archive.archlinux.org/packages/n/nodejs/nodejs-$NODE_VERSION-1-x86_64.pkg.tar.xz
+  sudo pacman --noconfirm -U https://archive.archlinux.org/packages/n/nodejs/nodejs-$NODE_VERSION-1-x86_64.pkg.tar.zst
 
 # Install node via nvm, bump up npm
 RUN source /usr/share/nvm/init-nvm.sh \

@@ -6,8 +6,8 @@ services:
 
 env:
   global:
-  - NODE_VERSION=12.10.0
-  - NPM_VERSION=6.10.2
+  - NODE_VERSION=13.7.0
+  - NPM_VERSION=6.13.7
 
 matrix:
   # let whole build fails if one of matrix build config fails
