@@ -1,12 +1,12 @@
 # Base docker image
-FROM fedora:21
+FROM fedora:latest
 
 # Set default node, npm version to install if not specified
 ARG NODE_VERSION=8.9.1
 ARG NPM_VERSION=5.6.0
 
 # Install base dependencies
-RUN rpm --rebuilddb; yum install -y \
+RUN rm -f /var/lib/rpm/__db*; rpm --rebuilddb; yum install -y \
     sudo \
     make \
     gcc \
@@ -16,8 +16,9 @@ RUN rpm --rebuilddb; yum install -y \
     wget \
     clang \
     cmake \
+    git \
     libgnome-keyring-devel \
-    libnss3 \
+#   libnss3 \
     libsecret-devel \
     gtk2-devel \
     libnotify-devel \
@@ -41,17 +42,6 @@ RUN rpm --rebuilddb; yum install -y \
     openssl-devel \
     zlib-devel \
     perl-ExtUtils-MakeMaker
-
-# Bump up git to latest
-
-RUN cd /usr/src && \
-  wget https://www.kernel.org/pub/software/scm/git/git-2.14.1.tar.gz && \
-  tar xzf git-2.14.1.tar.gz && \
-  cd git-2.14.1 && \
-  make prefix=/usr/local/git all && \
-  make prefix=/usr/local/git install
-
-ENV PATH /usr/local/git/bin:$PATH
 
 RUN git --version
 

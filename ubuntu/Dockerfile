@@ -1,5 +1,5 @@
 # Base docker image
-FROM ubuntu:xenial
+FROM ubuntu:latest
 
 # Set default node, npm version to install if not specified
 ARG NODE_VERSION=8.9.1
@@ -20,7 +20,6 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     fakeroot \
     clang \
     cmake \
-    libgnome-keyring-dev \
     libsecret-1-dev \
     libnss3 \
     libgtk2.0-dev \
@@ -41,7 +40,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     wget \
     xvfb \
     snapd \
-    snapcraft \
+    # snapcraft \
     squashfs-tools \
     --no-install-recommends
 
@@ -80,12 +79,7 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
   && npm install -g npm@$NPM_VERSION
 
-# bump up gcc to 4.9
-RUN apt-get install -y software-properties-common --no-install-recommends
-RUN add-apt-repository ppa:ubuntu-toolchain-r/test
-RUN apt-get update
-RUN apt-get install -y g++-4.9
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
+RUN apt-get install -y software-properties-common --no-install-recommends gcc
 
 # Setting passwordless sudo
 RUN echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
