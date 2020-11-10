@@ -5,7 +5,7 @@ FROM archlinux/base
 ARG NODE_VERSION=8.9.1
 ARG NPM_VERSION=5.6.0
 
-RUN pacman-key --refresh-keys --keyserver hkp://ipv4.pool.sks-keyservers.net:11371
+# RUN pacman-key --refresh-keys --keyserver hkp://ipv4.pool.sks-keyservers.net:11371
 RUN rm -fr /etc/pacman.d/gnupg && pacman-key --init && pacman-key --populate archlinux
 
 # Install dependencies
@@ -53,6 +53,9 @@ ENV HOME=/home/builder
 ENV TMPDIR=/home/builder/temp
 USER builder
 
+# Set makepkg ext configuration to archive into .xz
+ENV PKGEXT='.pkg.tar.xz'
+
 # Install packer for installing aur nvm package
 RUN mkdir $TMPDIR \
   && cd $TMPDIR \
@@ -60,9 +63,6 @@ RUN mkdir $TMPDIR \
   && cd nvm \
   && makepkg \
   && sudo pacman --noconfirm -U nvm-*.pkg.tar.xz
-
-# Set makepkg ext configuration to archive into .xz
-ENV PKGEXT='.pkg.tar.xz'
 
 ENV NVM_DIR=$HOME/.nvm
 
